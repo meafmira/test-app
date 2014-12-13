@@ -14,7 +14,7 @@ function handleError(err) {
   this.emit('end');
 }
 
-gulp.task('styles', ['wiredep'],  function () {
+gulp.task('styles',  function () {
   return gulp.src('src/{app,components}/**/*.less')
     .pipe($.less({
       paths: [
@@ -34,7 +34,7 @@ gulp.task('browserify', function() {
     cache: {}, packageCache: {}, fullPaths: true,
     entries: ['./src/app/index.coffee'],
     extensions: ['.coffee'],
-    paths: [ './bower_components' ],
+    paths: [ './bower_components', 'src/components' ],
     debug: true,
     insertGlobals: true
   });

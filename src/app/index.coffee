@@ -6,5 +6,6 @@ angular.module "testApp", [
   "ngSanitize"
   "restangular"
   "ui.router"
+  "ui.bootstrap"
   main.name
 ]
