@@ -7,5 +7,6 @@ angular.module "testApp", [
   "restangular"
   "ui.router"
   "ui.bootstrap"
+  "angular-loading-bar"
   main.name
 ]

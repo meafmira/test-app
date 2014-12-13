@@ -12,14 +12,14 @@
       <div class="form-inline gallery-controls">
         <label class="control-label">
           Sort by:
-          <select class="form-control" ng-model="main.sortBy" ng-change="main.sort()">
+          <select class="form-control" ng-model="main.sortBy" ng-change="main.update()">
             <option value="title">Title</option>
             <option value="date">Date</option>
           </select>
         </label>
         <label class="control-label">
           Pagination:
-          <select class="form-control" ng-model="main.pagination" ng-change="main.pageChanged()">
+          <select class="form-control" ng-model="main.pagination" ng-change="main.update()">
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="15">15</option>
@@ -27,40 +27,52 @@
             <option value="25">25</option>
           </select>
         </label>
+        <label class="control-label">
+          Search:
+          <input class="form-control" ng-model="main.searchQuery" ng-change="main.update()">
+        </label>
       </div>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" ng-if="main.totalItems == 0">
     <div class="col-md-12 col-sm-12">
-      <pagination ng-change="main.pageChanged()"
-                  ng-model="main.currentPage"
-                  total-items="main.totalItems"
-                  items-per-page="main.pagination"></pagination>
+      <h4 class="text-center">There are no images</h4>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-xs-6 col-md-3" ng-repeat="wrappedImage in main.wrappedImages">
-      <a href="#" class="thumbnail" ng-if="!wrappedImage.noImage">
-        <img class="img-responsive gallery-image" ng-src="{{ ::wrappedImage.image.url }}">
-        <div class="caption">
-          <p ng-bind="::wrappedImage.image.title"></p>
-          <div ng-bind="::wrappedImage.image.date | date:'mediumDate'"></div>
+  <div ng-if="main.totalItems != 0">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <pagination ng-change="main.update()"
+                    ng-model="main.currentPage"
+                    total-items="main.totalItems"
+                    items-per-page="main.pagination"></pagination>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6 col-md-3" ng-repeat="wrappedImage in main.wrappedImages">
+        <a href="#" class="thumbnail" ng-if="!wrappedImage.noImage">
+          <img class="img-responsive gallery-image" ng-src="{{ ::wrappedImage.image.url }}">
+          <div class="caption">
+            <p ng-bind="::wrappedImage.image.title"></p>
+            <div ng-bind="::wrappedImage.image.date | date:'mediumDate'"></div>
+          </div>
+        </a>
+        <div class="thumbnail" ng-if="wrappedImage.noImage">
+          <span class="no-image">No Image</span>
         </div>
-      </a>
-      <div class="thumbnail" ng-if="wrappedImage.noImage">
-        <span class="no-image">No Image</span>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-12 col-sm-12">
-      <pagination ng-change="main.pageChanged()"
-                  ng-model="main.currentPage"
-                  total-items="main.totalItems"
-                  items-per-page="main.pagination"></pagination>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <pagination ng-change="main.update()"
+                    ng-model="main.currentPage"
+                    total-items="main.totalItems"
+                    items-per-page="main.pagination"></pagination>
+      </div>
     </div>
   </div>
 
