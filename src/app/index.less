@@ -6,9 +6,43 @@
 }
 
 .thumbnail {
-  height: 200px;
+  position: relative;
+  .gallery-image {
+    height: 200px;
+  }
+  .no-image {
+    height: 325px;
+    text-align: center;
+    line-height: 325px;
+    width: 100%;
+    display: block;
+  }
 
-  img.pull-right {
-    width: 50px;
+  .caption {
+    height: 125px;
+  }
+
+  .close {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: none;
+  }
+  &:hover .close {
+    display: block;
   }
 }
+
+.gallery-controls {
+  padding: 10px 0;
+}
+
+.big-image-wrap {
+  min-height: 550px;
+  line-height: 550px;
+  img {
+    max-width: 100%;
+  }
+}
+
+

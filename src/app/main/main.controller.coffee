@@ -1,6 +1,7 @@
 class Main
-  constructor: ->
+  constructor: (ImageRest) ->
+    @images = ImageRest.getList()
 
-Main.$inject = []
+Main.$inject = [ 'ImageRest' ]
 
 module.exports = Main

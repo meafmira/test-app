@@ -6,5 +6,7 @@ angular.module "testApp", [
   "ngSanitize"
   "restangular"
   "ui.router"
+  "angular-loading-bar"
+  "templates"
   main.name
 ]
