@@ -1,5 +1,6 @@
 mainCtrl = require "./main.controller"
 imageService = require "images.service"
+imageModalCtrl = require "image-modal/image-modal.controller"
 
 module.exports = angular.module "testApp.main", []
 .config ($stateProvider, $urlRouterProvider) ->
@@ -12,4 +13,5 @@ module.exports = angular.module "testApp.main", []
   $urlRouterProvider.otherwise "/"
 
 .controller "MainCtrl", mainCtrl
+.controller "ImageModalCtrl", imageModalCtrl
 .factory "ImageRest", imageService

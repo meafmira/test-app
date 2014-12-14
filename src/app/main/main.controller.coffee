@@ -1,5 +1,5 @@
 class Main
-  constructor: (ImageRest, $q) ->
+  constructor: (ImageRest, $q, @$modal) ->
     @sortBy = "title"
     @pagination = 5
     @currentPage = 1
@@ -29,6 +29,13 @@ class Main
         @_paginate wrappedImages, @pagination, @currentPage
       .then (wrappedImages) => @wrappedImages = wrappedImages
 
+  showImage: (index) =>
+    @$modal.open
+      templateUrl: 'components/image-modal/index.html'
+      controller: 'ImageModalCtrl as imageModal'
+      resolve:
+        wrappedImages: => @deferImages
+        index: => index + @pagination * (@currentPage - 1)
 
   _sort: (wrappedImages, sortBy) =>
     comparators =
@@ -52,6 +59,6 @@ class Main
       wrappedImages.filter (wrappedImage) =>
         wrappedImage.image.title.toLocaleLowerCase().indexOf(searchQuery.toLocaleLowerCase()) != -1
 
-Main.$inject = [ 'ImageRest', '$q' ]
+Main.$inject = [ 'ImageRest', '$q', '$modal' ]
 
 module.exports = Main

@@ -53,7 +53,7 @@
 
     <div class="row">
       <div class="col-xs-6 col-md-3" ng-repeat="wrappedImage in main.wrappedImages">
-        <a href="#" class="thumbnail" ng-if="!wrappedImage.noImage">
+        <a href="" ng-click="main.showImage($index)" class="thumbnail" ng-if="!wrappedImage.noImage">
           <img class="img-responsive gallery-image" ng-src="{{ ::wrappedImage.image.url }}">
           <div class="caption">
             <p ng-bind="::wrappedImage.image.title"></p>
