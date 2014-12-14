@@ -1,31 +1,37 @@
 class Main
-  constructor: (ImageRest, $q, @$modal) ->
+  constructor: (ImageRest, $q, @$modal, @$cookies) ->
+    deletedImages = @$cookies.deletedImages
+    if deletedImages?
+      @deletedImages = deletedImages.split ','
+    else
+      @deletedImages = []
     @sortBy = "title"
     @pagination = 5
     @currentPage = 1
     @searchQuery = ''
     @totalItems = 0
     ImageRest.getList().then (images) =>
-      deferImages = images.map (image) ->
+      deferImages = images.map (image, index) ->
         image.date = new Date image.date
         deffered = $q.defer()
         img = new Image()
         img.onload = ->
-          deffered.resolve { image: image, noImage: false }
+          deffered.resolve { id: index, image: image, noImage: false }
         img.onerror = ->
-          deffered.resolve { image: image, noImage: true }
+          deffered.resolve { id: index, image: image, noImage: true }
         img.src = image.url
         deffered.promise
-      @deferImages = $q.all(deferImages).then (wrappedImages) =>
-        @wrappedImages = wrappedImages
+      @deferImages = $q.all(deferImages)
       @update()
 
   update: =>
     @deferImages
+      .then (wrappedImages) => @_deletedImages wrappedImages
       .then (wrappedImages) => @_sort wrappedImages, @sortBy
       .then (wrappedImages) => @_search wrappedImages, @searchQuery
       .then (wrappedImages) =>
         @totalItems = wrappedImages.length
+        @wrappedImagesWithoutPagination = wrappedImages
         @_paginate wrappedImages, @pagination, @currentPage
       .then (wrappedImages) => @wrappedImages = wrappedImages
 
@@ -34,8 +40,13 @@ class Main
       templateUrl: 'components/image-modal/index.html'
       controller: 'ImageModalCtrl as imageModal'
       resolve:
-        wrappedImages: => @deferImages
+        wrappedImages: => @wrappedImagesWithoutPagination
         index: => index + @pagination * (@currentPage - 1)
+
+  deleteImage: (id) =>
+    @deletedImages.push id.toString()
+    @$cookies.deletedImages = @deletedImages.join ','
+    @update()
 
   _sort: (wrappedImages, sortBy) =>
     comparators =
@@ -59,6 +70,14 @@ class Main
       wrappedImages.filter (wrappedImage) =>
         wrappedImage.image.title.toLocaleLowerCase().indexOf(searchQuery.toLocaleLowerCase()) != -1
 
-Main.$inject = [ 'ImageRest', '$q', '$modal' ]
+  _deletedImages: (wrappedImages) =>
+    if @deletedImages.length == 0
+      wrappedImages
+    else
+      wrappedImages.filter (wrappedImage) =>
+        wrappedImage.id.toString() not in @deletedImages
+
+
+Main.$inject = [ 'ImageRest', '$q', '$modal', '$cookies' ]
 
 module.exports = Main

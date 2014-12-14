@@ -59,9 +59,11 @@
             <p ng-bind="::wrappedImage.image.title"></p>
             <div ng-bind="::wrappedImage.image.date | date:'mediumDate'"></div>
           </div>
+          <button type="button" class="close" ng-click="main.deleteImage(wrappedImage.id)"><span aria-hidden="true">&times;</span></button>
         </a>
         <div class="thumbnail" ng-if="wrappedImage.noImage">
           <span class="no-image">No Image</span>
+          <button type="button" class="close" ng-click="main.deleteImage(wrappedImage.id)"><span aria-hidden="true">&times;</span></button>
         </div>
       </div>
     </div>

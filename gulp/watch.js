@@ -9,6 +9,5 @@ gulp.task('setWatch', function() {
 gulp.task('watch', ['setWatch', 'styles', 'browserify'] ,function () {
   gulp.watch('src/{app,components}/**/*.less', ['styles']);
   gulp.watch('src/assets/images/**/*', ['images']);
-  gulp.watch('bower.json', ['wiredep']);
   gulp.watch('.tmp/scripts/**/*.js', reload);
 });
