@@ -1,7 +1,8 @@
 mainCtrl = require "./main.controller"
+testGallery = require "test-gallery"
 
 module.exports = angular.module "testApp.main", [
-
+  testGallery.name
 ]
 .config ($stateProvider, $urlRouterProvider) ->
   $stateProvider

@@ -1,5 +1,4 @@
 main = require "./main"
-testGallery = require "test-gallery"
 
 angular.module "testApp", [
   "ngAnimate"
@@ -9,5 +8,4 @@ angular.module "testApp", [
   "ui.router"
   "angular-loading-bar"
   main.name
-  testGallery.name
 ]
