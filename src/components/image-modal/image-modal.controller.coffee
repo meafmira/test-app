@@ -6,7 +6,7 @@ class ImageModal
       fn = =>
         @next()
         @$timeout fn, @autoRotate
-      fn()
+      @$timeout fn, @autoRotate
 
   prev: ->
     if @index == 0
