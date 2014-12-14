@@ -1,5 +1,6 @@
 Test application for Innovecs
 =============================
+[Demo](http://miafmira.github.io/test-app/)
 Develop
 -----------------------------
 1. npm install -g gulp bower
