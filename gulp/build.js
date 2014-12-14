@@ -70,13 +70,14 @@ gulp.task('partials', function () {
       quotes: true
     }))
     .pipe($.ngHtml2js({
-      moduleName: 'testApp'
+      moduleName: 'templates'
     }))
-    .pipe(gulp.dest('.tmp'))
+    .pipe($.concat("templates.js"))
+    .pipe(gulp.dest('.tmp/scripts/'))
     .pipe($.size());
 });
 
-gulp.task('html', ['styles', 'partials'], function () {
+gulp.task('html', ['styles', 'partials', 'browserify'], function () {
   var htmlFilter = $.filter('*.html');
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
@@ -113,6 +114,13 @@ gulp.task('html', ['styles', 'partials'], function () {
     .pipe($.size());
 });
 
+gulp.task('api', function () {
+  return gulp.src('src/assets/*.json')
+    .pipe(gulp.dest('dist/assets'))
+    .pipe($.size());
+});
+
+
 gulp.task('images', function () {
   return gulp.src('src/assets/images/**/*')
     .pipe($.cache($.imagemin({
@@ -142,4 +150,4 @@ gulp.task('clean', function (done) {
   $.del(['.tmp', 'dist'], done);
 });
 
-gulp.task('build', ['html', 'images', 'fonts', 'misc']);
+gulp.task('build', ['html', 'images', 'api', 'fonts', 'misc']);
